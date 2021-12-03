@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Peticion } from './pract6/Peticion';
-
+import App from './App';
+import "./index.css"
+import { AuthContextProvider } from "./components/store/auth-context";
 ReactDOM.render(
-  <Peticion/>,
-  document.getElementById('root')
+  <AuthContextProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </AuthContextProvider>, document.getElementById('root')
 );
 
 
