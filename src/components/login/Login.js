@@ -1,10 +1,10 @@
 import React, { useContext, useReducer, useState } from 'react'
 import {Card} from "../UI/Card";
 import {Button} from '../UI/Button';
-import AuthContext from '../store/auth-context';
+import {AuthContext} from '../store/auth-context';
 
 const emailReducer = (state, action) => {
-    if (action.type === "USER INPUT") {
+    if (action.type === "user") {
         return {
             value: action.val,
             isValid: action.val.includes("@")
@@ -16,9 +16,8 @@ const emailReducer = (state, action) => {
     };
 };
 
-const Login = (props) => {
-    const ctx = useContext(AuthContext);
-   
+export const Login = (props) => {
+    const ctx = useContext(AuthContext); 
     const [email, dispatchEmail] = useReducer(emailReducer, {
         value: "",
         isValid: null
@@ -28,7 +27,7 @@ const Login = (props) => {
     const emailChangeHandler = (e) => {
         dispatchEmail({
             val: e.target.value,
-            type: "USER INPUT"
+            type: "user"
         });
     };
 
@@ -40,6 +39,8 @@ const Login = (props) => {
         e.preventDefault();
         if (email.isValid) {
             ctx.onLogin(email, password);
+            const emailLogin=email.value;
+            props.emailLog(emailLogin);
         }
         else {
             console.log("el email es invalido");
@@ -60,5 +61,3 @@ const Login = (props) => {
         </Card>
     );
 };
-
-export default Login;

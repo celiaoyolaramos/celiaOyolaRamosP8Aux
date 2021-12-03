@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
     isLoggedIn: false,
     onLogin: (email, password) => {},
     onLogout: () => {}
@@ -26,15 +26,29 @@ export const AuthContextProvider = (props) => {
         localStorage.removeItem("isLoggedIn");
         setIsLoggedIn(false);
     };
-
+    const filmsReducer=(state,action)=>{
+        switch (action.type){
+            case "add_film":{
+                return [...state, action.payload];
+            }
+            case "remove_film":{
+                return state.filter((item)=>item.id !==action.payload);
+            }
+            default:{
+                return state;
+            }
+        }
+    };
+    const [state, dispatch]=useReducer(filmsReducer,[]);
     return (
         <AuthContext.Provider
             value={{
                 isLoggedIn,
                 onLogin: loginHandler,
-                onLogout: logoutHandler
-            }}
-        >
+                onLogout: logoutHandler,
+                state,
+                dispatch
+            }}>
             {props.children}
         </AuthContext.Provider>
     );

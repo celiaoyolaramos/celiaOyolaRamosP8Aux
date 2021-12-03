@@ -1,31 +1,36 @@
-import React,{useState} from 'react';
+import React,{useCallback, useState} from 'react';
 import { useContext } from 'react';
-import {NewPet} from './components/Pet/NewPet';
+import {NewFilm} from './components/Film/NewFilm';
 import {NavBar} from './components/navigation/NavBar';
-import {PetsList} from './components/Pet/PetsList'
+import {FilmList} from './components/Film/FilmList'
 import authCtx from './components/store/auth-context';
-import Login from './components/login/Login';
+import {Login} from './components/login/Login';
 function App(){
     const ctx = useContext(authCtx);
-    const [petsList, setPetsList] = useState([]);
-    const newPetHandler=(petName, ownerName, ownerEmail)=>{
-        setPetsList((prevPetList)=>{
-            return [...prevPetList,{ id:Math.trunc()*100,petName, ownerName, ownerEmail} ]
+    const[emailNav, setEmailNav]=useState("");
+    const Email=useCallback((emailLogin)=>{
+        setEmailNav(emailLogin);
+    },[])
+    /*const [filmsList, setFilmsList] = useState([]);
+    const newFilmHandler=(filmName, yearPremiere, directorName, newPrice)=>{
+        setFilmsList((prevFilmList)=>{
+            return [...prevFilmList,{ id:Math.trunc()*100, filmName, yearPremiere, directorName, newPrice} ]
         });
-    };
+    };*/
 
     return (
     <div className="content">
-        <NavBar/>
+        <NavBar email={emailNav}/>
         {ctx.isLoggedIn?(
             <>
-             <NewPet onNewPet={newPetHandler}/>
-             <PetsList pets={petsList} />
+             <NewFilm />
+             <FilmList  />
             </>
         ):(
-            <Login/>
+            <Login emailLog={Email}/>
         )}
     </div>
     )
 };
 export default App;
+
