@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Calculadora } from './calculadora/Calculadora';
+import { Peticion } from './pract6/Peticion';
 
 ReactDOM.render(
-  <Calculadora/>,
+  <Peticion/>,
   document.getElementById('root')
 );
 
